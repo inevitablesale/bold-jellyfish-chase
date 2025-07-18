@@ -26,6 +26,9 @@ export const Header = () => {
           <NavLink to="/register-agent" className={navLinkClasses}>
             Register Agent
           </NavLink>
+          <NavLink to="/architecture" className={navLinkClasses}>
+            Architecture
+          </NavLink>
         </nav>
       </div>
     </header>
