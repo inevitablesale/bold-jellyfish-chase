@@ -23,6 +23,9 @@ export const Header = () => {
           <NavLink to="/marketplace" className={navLinkClasses}>
             Marketplace
           </NavLink>
+          <NavLink to="/workflows" className={navLinkClasses}>
+            Workflows
+          </NavLink>
           <NavLink to="/architecture" className={navLinkClasses}>
             Architecture
           </NavLink>
