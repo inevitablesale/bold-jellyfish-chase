@@ -43,6 +43,7 @@ export const AgentBuilderDialog = ({ isOpen, setIsOpen, onAgentCreate, initialQu
       id: `custom-${Date.now()}`,
       name,
       description,
+      category: 'automation',
       skills: ['Custom', 'AI-Generated'],
       technologies: ['Simulated Gemini Flash'],
       source: 'Internal',
