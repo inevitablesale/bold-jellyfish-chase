@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { BotMessageSquare, Settings } from "lucide-react";
+import { BotMessageSquare } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export const Header = () => {
@@ -30,11 +30,7 @@ export const Header = () => {
             Architecture
           </NavLink>
         </nav>
-        <div className="flex items-center">
-          <NavLink to="/settings" className={navLinkClasses}>
-            <Settings className="h-5 w-5" />
-            <span className="sr-only">Settings</span>
-          </NavLink>
-        </div>
       </div>
     </header>
+  );
+};

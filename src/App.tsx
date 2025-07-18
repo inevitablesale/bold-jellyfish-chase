@@ -9,7 +9,6 @@ import AgentMarketplace from "./pages/AgentMarketplace";
 import AgentExecution from "./pages/AgentExecution";
 import RegisterAgent from "./pages/RegisterAgent";
 import ArchitecturePage from "./pages/Architecture";
-import SettingsPage from "./pages/Settings";
 import { Layout } from "./components/Layout";
 
 const queryClient = new QueryClient();
@@ -27,7 +26,6 @@ const App = () => (
             <Route path="/agent/:id" element={<AgentExecution />} />
             <Route path="/register-agent" element={<RegisterAgent />} />
             <Route path="/architecture" element={<ArchitecturePage />} />
-            <Route path="/settings" element={<SettingsPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Layout>
