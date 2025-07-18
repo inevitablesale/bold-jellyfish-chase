@@ -1,28 +1,30 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { agents } from "../data/agents";
+import { agents as initialAgents } from "../data/agents";
 import { AgentCard } from "@/components/AgentCard";
 import { showError } from "@/utils/toast";
 import type { Agent } from "../data/agents";
 import { findBestMatch } from "@/lib/vector-search";
 import { Loader2 } from "lucide-react";
+import { AgentBuilderDialog } from "@/components/AgentBuilderDialog";
 
 const Dashboard = () => {
-  const [request, setRequest] = useState(agents[0].exampleRequest);
+  const [request, setRequest] = useState(initialAgents[0].exampleRequest);
+  const [agentsList, setAgentsList] = useState<Agent[]>(initialAgents);
   const [matchedAgents, setMatchedAgents] = useState<Agent[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchAttempted, setSearchAttempted] = useState(false);
+  const [isBuilderOpen, setIsBuilderOpen] = useState(false);
 
   const handleMatch = async () => {
     setIsLoading(true);
     setSearchAttempted(true);
     
-    // Artificial delay for better UX, so the loading state is visible
     await new Promise(resolve => setTimeout(resolve, 500));
 
     try {
-      const bestMatch = await findBestMatch(request, agents);
+      const bestMatch = await findBestMatch(request, agentsList);
       setMatchedAgents(bestMatch ? [bestMatch] : []);
     } catch (error) {
       console.error("Search failed:", error);
@@ -31,6 +33,13 @@ const Dashboard = () => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleAgentCreate = (newAgent: Agent) => {
+    setAgentsList(prev => [...prev, newAgent]);
+    setMatchedAgents([newAgent]);
+    setIsLoading(false);
+    setSearchAttempted(true);
   };
 
   const renderResults = () => {
@@ -47,7 +56,7 @@ const Dashboard = () => {
     }
 
     if (!searchAttempted) {
-      return null; // Don't show anything before the first search
+      return null;
     }
 
     if (matchedAgents.length > 0) {
@@ -64,9 +73,12 @@ const Dashboard = () => {
     }
 
     return (
-      <div className="text-center p-8">
+      <div className="text-center p-8 border-2 border-dashed rounded-lg">
         <h2 className="text-xl font-semibold tracking-tight">No Suitable Agent Found</h2>
-        <p className="text-muted-foreground mt-2">Please try rephrasing your request for better results.</p>
+        <p className="text-muted-foreground mt-2 mb-4">We couldn't find an agent for your request. You can build a new one.</p>
+        <Button onClick={() => setIsBuilderOpen(true)}>
+          Build New Agent with AI
+        </Button>
       </div>
     );
   };
@@ -105,6 +117,13 @@ const Dashboard = () => {
       <div className="mt-16">
         {renderResults()}
       </div>
+
+      <AgentBuilderDialog 
+        isOpen={isBuilderOpen}
+        setIsOpen={setIsBuilderOpen}
+        onAgentCreate={handleAgentCreate}
+        initialQuery={request}
+      />
     </div>
   );
 };
