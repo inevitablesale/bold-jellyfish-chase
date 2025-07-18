@@ -4,14 +4,18 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { PlusCircle, Bot, Play, Trash2, ArrowRight, MousePointer } from "lucide-react";
+import { PlusCircle, Bot, Play, Trash2, ArrowRight, MousePointer, Clock, Webhook } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { showSuccess, showError } from "@/utils/toast";
 import { agents as allAgents, Agent } from "@/data/agents";
+import { TriggerConfigurationDialog } from "@/components/TriggerConfigurationDialog";
+
+type TriggerType = 'manual' | 'scheduled' | 'webhook';
 
 type SymphonyStep = {
   id: string;
   type: 'trigger' | 'agent';
+  triggerType?: TriggerType;
   content: {
     title: string;
     description?: string;
@@ -33,12 +37,14 @@ const ComposeSymphony = () => {
   const [searchParams] = useSearchParams();
   const [symphonyName, setSymphonyName] = useState('');
   const [steps, setSteps] = useState<SymphonyStep[]>([]);
+  const [isTriggerDialogOpen, setIsTriggerDialogOpen] = useState(false);
 
   useEffect(() => {
     const initialSteps: SymphonyStep[] = [
       {
         id: `trigger-${Date.now()}`,
         type: 'trigger',
+        triggerType: 'manual',
         content: {
           title: '1. Trigger',
           description: 'Manual Run',
@@ -87,8 +93,16 @@ const ComposeSymphony = () => {
     showSuccess("Instrument removed from symphony.");
   };
 
-  const handleChangeTrigger = () => {
-    showSuccess("Trigger configuration is not yet implemented.");
+  const handleSaveTrigger = (newDescription: string, type: TriggerType) => {
+    setSteps(prevSteps => {
+      const newSteps = [...prevSteps];
+      const triggerStepIndex = newSteps.findIndex(step => step.type === 'trigger');
+      if (triggerStepIndex !== -1) {
+        newSteps[triggerStepIndex].content.description = newDescription;
+        newSteps[triggerStepIndex].triggerType = type;
+      }
+      return newSteps;
+    });
   };
 
   const handleSave = () => {
@@ -99,6 +113,19 @@ const ComposeSymphony = () => {
     showSuccess(`Symphony "${symphonyName}" is now ready for performance!`);
     navigate("/symphonies");
   };
+
+  const getTriggerIcon = (type?: TriggerType) => {
+    switch (type) {
+      case 'scheduled':
+        return <Clock className="h-5 w-5 text-primary" />;
+      case 'webhook':
+        return <Webhook className="h-5 w-5 text-primary" />;
+      default:
+        return <MousePointer className="h-5 w-5 text-primary" />;
+    }
+  };
+
+  const triggerStep = steps.find(step => step.type === 'trigger');
 
   return (
     <div className="container mx-auto p-4 md:p-8">
@@ -129,18 +156,18 @@ const ComposeSymphony = () => {
                     <Card className="w-64 shrink-0 shadow-md">
                       <CardHeader className="flex-row items-start gap-3 space-y-0 pb-3">
                         <div className="bg-muted p-2 rounded-full">
-                          {step.type === 'trigger' ? <MousePointer className="h-5 w-5 text-primary" /> : <Bot className="h-5 w-5 text-primary" />}
+                          {step.type === 'trigger' ? getTriggerIcon(step.triggerType) : <Bot className="h-5 w-5 text-primary" />}
                         </div>
                         <div>
                           <p className="font-semibold text-sm">{step.content.title}</p>
-                          {step.type === 'trigger' && <p className="text-xs text-muted-foreground">{step.content.description}</p>}
+                          <p className="text-xs text-muted-foreground">{step.content.description}</p>
                         </div>
                       </CardHeader>
                       <CardContent>
                         {step.type === 'agent' ? (
                           <Badge variant="secondary">{step.content.agent?.name}</Badge>
                         ) : (
-                          <Button variant="outline" size="sm" onClick={handleChangeTrigger}>Change Trigger</Button>
+                          <Button variant="outline" size="sm" onClick={() => setIsTriggerDialogOpen(true)}>Change Trigger</Button>
                         )}
                       </CardContent>
                       {step.type === 'agent' && (
@@ -152,7 +179,7 @@ const ComposeSymphony = () => {
                       )}
                     </Card>
                     
-                    {index < steps.length && (
+                    {index < steps.length -1 && (
                       <ArrowRight className="h-8 w-8 text-muted-foreground shrink-0" />
                     )}
                   </Fragment>
@@ -174,6 +201,12 @@ const ComposeSymphony = () => {
           </div>
         </CardContent>
       </Card>
+      <TriggerConfigurationDialog
+        isOpen={isTriggerDialogOpen}
+        setIsOpen={setIsTriggerDialogOpen}
+        currentDescription={triggerStep?.content.description || 'Manual Run'}
+        onSave={handleSaveTrigger}
+      />
     </div>
   );
 };
