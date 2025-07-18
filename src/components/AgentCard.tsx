@@ -3,20 +3,30 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, ShoppingCart, Cpu } from "lucide-react";
-import type { Agent } from "../data/agents";
+import type { Agent, AgentSource } from "../data/agents";
 
 interface AgentCardProps {
   agent: Agent;
 }
 
 export const AgentCard = ({ agent }: AgentCardProps) => {
-  const getBadgeVariant = (source: Agent['source']) => {
+  const getBadgeVariant = (source: AgentSource) => {
     switch (source) {
-      case 'Open Source': return 'secondary';
-      case 'N8N': return 'default';
-      case 'Make.com': return 'outline';
-      case 'Internal': return 'destructive';
-      default: return 'secondary';
+      case 'N8N':
+      case 'Make.com':
+      case 'Zapier':
+        return 'default'; // Automation Platforms
+      case 'Internal':
+        return 'destructive'; // Internal tools
+      case 'LangChain':
+      case 'CrewAI':
+        return 'secondary'; // AI Frameworks
+      case 'Apify':
+        return 'outline'; // Scraping Platforms
+      case 'Open Source':
+      case 'Custom API':
+      default:
+        return 'secondary';
     }
   }
 

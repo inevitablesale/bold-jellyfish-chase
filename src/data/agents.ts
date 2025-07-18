@@ -1,10 +1,22 @@
+export type AgentSource = 
+  | 'Open Source' 
+  | 'N8N' 
+  | 'Make.com' 
+  | 'Internal' 
+  | 'Zapier'
+  | 'LangChain'
+  | 'CrewAI'
+  | 'Apify'
+  | 'Custom API'
+  | 'Other';
+
 export interface Agent {
   id: string;
   name: string;
   description: string;
   skills: string[];
   technologies?: string[];
-  source: 'Open Source' | 'N8N' | 'Make.com' | 'Internal';
+  source: AgentSource;
   author: string;
   version: string;
   outputFormat: 'CSV' | 'JSON' | 'PDF';
@@ -21,7 +33,7 @@ export const agents: Agent[] = [
     description: 'Scans public directories and social media to find potential leads based on your criteria.',
     skills: ['Lead Generation', 'Web Scraping', 'Data Analysis'],
     technologies: ['Apify', 'PhantomBuster', 'Google Search'],
-    source: 'Open Source',
+    source: 'Apify',
     author: 'Community',
     version: '1.2.0',
     outputFormat: 'CSV',
@@ -102,7 +114,7 @@ export const agents: Agent[] = [
     description: 'Generates engaging video scripts based on a topic and desired tone.',
     skills: ['Scriptwriting', 'Content Creation', 'YouTube'],
     technologies: ['OpenAI GPT-4'],
-    source: 'Open Source',
+    source: 'LangChain',
     author: 'Creator Tools',
     version: '1.0.0',
     outputFormat: 'JSON',
@@ -196,7 +208,7 @@ export const agents: Agent[] = [
     description: 'Transcribes and summarizes audio recordings of meetings into action items and key points.',
     skills: ['Transcription', 'Summarization', 'Productivity'],
     technologies: ['Speech-to-Text', 'NLP'],
-    source: 'Internal',
+    source: 'CrewAI',
     author: 'Productivity Pro',
     version: '1.8.0',
     outputFormat: 'JSON',
@@ -210,7 +222,7 @@ export const agents: Agent[] = [
     description: 'Analyzes code and suggests improvements for readability, performance, and best practices.',
     skills: ['Development', 'Code Quality', 'Software Engineering'],
     technologies: ['Static Analysis', 'AI Code Models'],
-    source: 'Open Source',
+    source: 'LangChain',
     author: 'CodeCleanse',
     version: '0.9.0',
     outputFormat: 'JSON',
@@ -222,7 +234,7 @@ export const agents: Agent[] = [
     description: 'Scrapes and analyzes competitor ads from social media platforms.',
     skills: ['Competitive Analysis', 'Marketing', 'Advertising'],
     technologies: ['Web Scraping', 'Facebook Ads API'],
-    source: 'Internal',
+    source: 'Apify',
     author: 'AdIntel',
     version: '2.0.0',
     outputFormat: 'PDF',
@@ -438,7 +450,7 @@ export const agents: Agent[] = [
     description: 'Identifies and merges duplicate contacts and accounts in Salesforce.',
     skills: ['CRM', 'Data Management', 'Sales Ops'],
     technologies: ['Salesforce API', 'Fuzzy Matching'],
-    source: 'Make.com',
+    source: 'Zapier',
     author: 'CRM Experts',
     version: '2.0.0',
     outputFormat: 'CSV',
@@ -570,7 +582,7 @@ export const agents: Agent[] = [
     description: 'Creates realistic text-to-speech voiceovers in various languages and accents.',
     skills: ['Audio', 'Video Production', 'Content Creation'],
     technologies: ['Text-to-Speech', 'ElevenLabs API'],
-    source: 'Open Source',
+    source: 'Custom API',
     author: 'AudioTools',
     version: '1.6.0',
     outputFormat: 'JSON',
@@ -622,7 +634,7 @@ export const agents: Agent[] = [
     description: 'Generates multiple variations of ad copy or headlines for A/B testing.',
     skills: ['Marketing', 'Copywriting', 'A/B Testing'],
     technologies: ['Generative AI'],
-    source: 'Internal',
+    source: 'CrewAI',
     author: 'Growth Hackers',
     version: '1.2.0',
     outputFormat: 'JSON',
@@ -674,7 +686,7 @@ export const agents: Agent[] = [
     description: 'Summarizes dense scientific papers into an abstract, key findings, and methodology.',
     skills: ['Academia', 'Research', 'Summarization'],
     technologies: ['NLP', 'PDF Parser'],
-    source: 'Internal',
+    source: 'LangChain',
     author: 'Scholar AI',
     version: '1.5.0',
     outputFormat: 'JSON',

@@ -30,15 +30,24 @@ const RegisterAgent = () => {
                <p className="text-sm text-muted-foreground">
                  Automatically populate fields by uploading a blueprint from a supported platform.
                </p>
-               <div className="space-y-2">
+               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                  <Label htmlFor="make-json" className="flex items-center gap-4 p-4 border-2 border-dashed rounded-lg cursor-pointer hover:bg-muted/50 transition-colors">
                    <UploadCloud className="h-8 w-8 text-muted-foreground" />
                    <div>
-                     <span className="font-semibold text-primary">Upload Make.com Scenario JSON</span>
-                     <p className="text-xs text-muted-foreground">We'll parse the blueprint to fill in the agent's name, modules, and skills.</p>
+                     <span className="font-semibold text-primary">Upload Make.com JSON</span>
+                     <p className="text-xs text-muted-foreground">Parse a Scenario blueprint.</p>
                    </div>
                  </Label>
                  <Input id="make-json" type="file" className="hidden" accept=".json" />
+
+                 <Label htmlFor="n8n-json" className="flex items-center gap-4 p-4 border-2 border-dashed rounded-lg cursor-pointer hover:bg-muted/50 transition-colors">
+                   <UploadCloud className="h-8 w-8 text-muted-foreground" />
+                   <div>
+                     <span className="font-semibold text-primary">Upload N8N Workflow JSON</span>
+                     <p className="text-xs text-muted-foreground">Parse a Workflow blueprint.</p>
+                   </div>
+                 </Label>
+                 <Input id="n8n-json" type="file" className="hidden" accept=".json" />
                </div>
             </div>
 
@@ -86,6 +95,11 @@ const RegisterAgent = () => {
                     <SelectItem value="open-source">Open Source</SelectItem>
                     <SelectItem value="n8n">N8N</SelectItem>
                     <SelectItem value="make-com">Make.com</SelectItem>
+                    <SelectItem value="zapier">Zapier</SelectItem>
+                    <SelectItem value="langchain">LangChain</SelectItem>
+                    <SelectItem value="crewai">CrewAI</SelectItem>
+                    <SelectItem value="apify">Apify</SelectItem>
+                    <SelectItem value="custom-api">Custom API</SelectItem>
                     <SelectItem value="internal">Internal</SelectItem>
                     <SelectItem value="other">Other</SelectItem>
                   </SelectContent>
