@@ -38,6 +38,13 @@ const RegisterAgent = () => {
                 Provide a comma-separated list of skills. This is crucial for matching.
               </p>
             </div>
+            <div className="space-y-2">
+              <Label htmlFor="technologies">Technologies / Platforms</Label>
+              <Input id="technologies" placeholder="e.g., Apify, Google Maps API, OpenAI GPT-4 (comma-separated)" />
+              <p className="text-sm text-muted-foreground">
+                List the core technologies or platforms your agent is built on.
+              </p>
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
                 <Label htmlFor="source">Source</Label>

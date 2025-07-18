@@ -7,7 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Download, Terminal, CheckCircle, Clock, ShoppingCart } from "lucide-react";
+import { Download, Terminal, CheckCircle, Clock, ShoppingCart, Cpu } from "lucide-react";
 import { showSuccess } from "@/utils/toast";
 
 const AgentExecution = () => {
@@ -95,21 +95,35 @@ const AgentExecution = () => {
           <CardDescription>{agent.description}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
-          <div>
-            <h3 className="font-semibold mb-2">Details</h3>
-            <div className="text-sm text-muted-foreground space-y-1">
-              <p><strong>Source:</strong> {agent.source}</p>
-              <p><strong>Author:</strong> {agent.author}</p>
-              <p><strong>Version:</strong> {agent.version}</p>
-              <p><strong>Output Format:</strong> {agent.outputFormat}</p>
+          <div className="grid md:grid-cols-2 gap-6">
+            <div>
+              <h3 className="font-semibold mb-2">Details</h3>
+              <div className="text-sm text-muted-foreground space-y-1">
+                <p><strong>Source:</strong> {agent.source}</p>
+                <p><strong>Author:</strong> {agent.author}</p>
+                <p><strong>Version:</strong> {agent.version}</p>
+                <p><strong>Output Format:</strong> {agent.outputFormat}</p>
+              </div>
             </div>
-          </div>
-          <div>
-            <h3 className="font-semibold mb-2">Skills</h3>
-            <div className="flex flex-wrap gap-2">
-              {agent.skills.map((skill) => (
-                <Badge key={skill} variant="secondary">{skill}</Badge>
-              ))}
+            <div className="space-y-4">
+              <div>
+                <h3 className="font-semibold mb-2">Skills</h3>
+                <div className="flex flex-wrap gap-2">
+                  {agent.skills.map((skill) => (
+                    <Badge key={skill} variant="secondary">{skill}</Badge>
+                  ))}
+                </div>
+              </div>
+              {agent.technologies && agent.technologies.length > 0 && (
+                <div>
+                  <h3 className="font-semibold mb-2 flex items-center"><Cpu className="mr-2 h-4 w-4" /> Technologies Used</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {agent.technologies.map((tech) => (
+                      <Badge key={tech} variant="outline">{tech}</Badge>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 

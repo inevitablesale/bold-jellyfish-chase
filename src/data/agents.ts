@@ -3,6 +3,7 @@ export interface Agent {
   name: string;
   description: string;
   skills: string[];
+  technologies?: string[];
   source: 'Open Source' | 'N8N' | 'Make.com' | 'Internal';
   author: string;
   version: string;
@@ -18,6 +19,7 @@ export const agents: Agent[] = [
     name: 'Lead Generation Bot',
     description: 'Scans public directories and social media to find potential leads based on your criteria.',
     skills: ['Lead Generation', 'Web Scraping', 'Data Analysis'],
+    technologies: ['Apify', 'PhantomBuster', 'Google Search'],
     source: 'Open Source',
     author: 'Community',
     version: '1.2.0',
@@ -31,6 +33,7 @@ export const agents: Agent[] = [
     name: 'Market Research Analyst',
     description: 'Analyzes market trends, competitor strategies, and customer sentiment from various data sources.',
     skills: ['Market Research', 'Sentiment Analysis', 'Reporting'],
+    technologies: ['Google Maps API', 'OpenAI GPT-4'],
     source: 'Internal',
     author: 'Our Team',
     version: '2.0.1',
@@ -44,6 +47,7 @@ export const agents: Agent[] = [
     name: 'N8N Social Media Poster',
     description: 'An N8N workflow that automatically posts content to multiple social media platforms.',
     skills: ['Social Media', 'Automation', 'Content Management'],
+    technologies: ['N8N'],
     source: 'N8N',
     author: 'N8N Community',
     version: '1.0.0',
@@ -55,6 +59,7 @@ export const agents: Agent[] = [
     name: 'Make.com CRM Sync',
     description: 'A Make.com scenario to sync customer data between HubSpot and Salesforce.',
     skills: ['CRM', 'Data Synchronization', 'API Integration'],
+    technologies: ['Make.com', 'Salesforce API', 'HubSpot API'],
     source: 'Make.com',
     author: 'Make.com Templates',
     version: '1.5.0',
