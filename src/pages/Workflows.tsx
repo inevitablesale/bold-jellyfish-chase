@@ -1,6 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { 
   ArrowRight, 
   MousePointer, 
@@ -10,8 +11,18 @@ import {
   Bot,
   PlusCircle,
   Sparkles,
-  ArrowDown
+  ArrowDown,
+  PlayCircle,
+  Pencil,
+  Trash2,
+  MoreHorizontal
 } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const WorkflowStep = ({ icon, title, description, agentName }: { icon: React.ReactNode, title: string, description: string, agentName?: string }) => (
   <Card className="w-full md:w-80 text-left shadow-lg hover:shadow-xl transition-shadow">
@@ -43,65 +54,122 @@ const Workflows = () => {
         </p>
       </div>
 
-      <div className="relative">
+      <div className="relative mb-12">
         <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8">
-          {/* Step 1 */}
           <WorkflowStep 
             icon={<MousePointer className="h-6 w-6 text-primary" />}
             title="Trigger"
             description="Start with a schedule, webhook, or manual run."
           />
-
           <ArrowRight className="hidden md:block h-8 w-8 shrink-0 text-muted-foreground" />
           <ArrowDown className="md:hidden h-8 w-8 shrink-0 text-muted-foreground my-2" />
-
-          {/* Step 2 */}
           <WorkflowStep 
             icon={<DatabaseZap className="h-6 w-6 text-primary" />}
             title="Run Agent"
             description="Execute an agent from the marketplace."
             agentName="Lead Generation Bot"
           />
-
           <ArrowRight className="hidden md:block h-8 w-8 shrink-0 text-muted-foreground" />
           <ArrowDown className="md:hidden h-8 w-8 shrink-0 text-muted-foreground my-2" />
-
-          {/* Step 3 */}
           <WorkflowStep 
             icon={<FileText className="h-6 w-6 text-primary" />}
             title="Run Agent"
             description="Pass the output to another agent."
             agentName="Market Research Analyst"
           />
-          
           <ArrowRight className="hidden md:block h-8 w-8 shrink-0 text-muted-foreground" />
           <ArrowDown className="md:hidden h-8 w-8 shrink-0 text-muted-foreground my-2" />
-
-          {/* Step 4 */}
            <WorkflowStep 
             icon={<Mail className="h-6 w-6 text-primary" />}
             title="Action"
             description="Send results via email or to a webhook."
           />
         </div>
-        
-        <div className="flex justify-center mt-8">
-          <Button variant="outline" className="border-dashed border-2 h-24 w-full md:w-80 flex-col gap-1 text-muted-foreground hover:text-foreground hover:bg-muted/50">
-            <PlusCircle className="h-6 w-6" />
-            <span>Add a Step</span>
-          </Button>
-        </div>
       </div>
 
-      <div className="mt-16 text-center p-8 bg-card border rounded-lg max-w-3xl mx-auto">
-        <h2 className="text-2xl font-bold tracking-tight">A Glimpse into the Future</h2>
-        <p className="mt-2 text-muted-foreground">
-          Our visual workflow builder is the next evolution of the platform. We're working hard to bring this powerful feature to you, enabling true agent-to-agent communication and complex task automation.
-        </p>
-        <Button size="lg" className="mt-6" disabled>
-          Coming Soon
-        </Button>
-      </div>
+      <Card>
+        <CardHeader className="flex flex-row items-center justify-between">
+          <div>
+            <CardTitle>My Workflows</CardTitle>
+            <CardDescription>Manage your automated agent workflows.</CardDescription>
+          </div>
+          <Button>
+            <PlusCircle className="mr-2 h-4 w-4" />
+            Create New Workflow
+          </Button>
+        </CardHeader>
+        <CardContent>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Name</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Trigger</TableHead>
+                <TableHead>Last Run</TableHead>
+                <TableHead className="text-right">Actions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <TableRow>
+                <TableCell className="font-medium">Automated Lead Enrichment</TableCell>
+                <TableCell><Badge>Active</Badge></TableCell>
+                <TableCell>Manual</TableCell>
+                <TableCell>2 hours ago</TableCell>
+                <TableCell className="text-right">
+                  <Button variant="ghost" size="icon" className="mr-2">
+                    <PlayCircle className="h-4 w-4" />
+                  </Button>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="ghost" size="icon">
+                        <MoreHorizontal className="h-4 w-4" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuItem>
+                        <Pencil className="mr-2 h-4 w-4" />
+                        Edit
+                      </DropdownMenuItem>
+                      <DropdownMenuItem className="text-red-500 hover:text-red-500 focus:text-red-500">
+                        <Trash2 className="mr-2 h-4 w-4" />
+                        Delete
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-medium">Daily Social Media Post</TableCell>
+                <TableCell><Badge variant="secondary">Inactive</Badge></TableCell>
+                <TableCell>Scheduled (Daily at 9am)</TableCell>
+                <TableCell>1 day ago</TableCell>
+                <TableCell className="text-right">
+                  <Button variant="ghost" size="icon" className="mr-2">
+                    <PlayCircle className="h-4 w-4" />
+                  </Button>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="ghost" size="icon">
+                        <MoreHorizontal className="h-4 w-4" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuItem>
+                        <Pencil className="mr-2 h-4 w-4" />
+                        Edit
+                      </DropdownMenuItem>
+                      <DropdownMenuItem className="text-red-500 hover:text-red-500 focus:text-red-500">
+                        <Trash2 className="mr-2 h-4 w-4" />
+                        Delete
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </CardContent>
+      </Card>
     </div>
   );
 };
