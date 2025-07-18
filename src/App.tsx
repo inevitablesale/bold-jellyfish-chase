@@ -10,6 +10,7 @@ import RegisterAgent from "./pages/RegisterAgent";
 import ArchitecturePage from "./pages/Architecture";
 import Workflows from "./pages/Workflows";
 import { Layout } from "./components/Layout";
+import CreateWorkflow from "./pages/CreateWorkflow";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +27,7 @@ const App = () => (
             <Route path="/register-agent" element={<RegisterAgent />} />
             <Route path="/architecture" element={<ArchitecturePage />} />
             <Route path="/workflows" element={<Workflows />} />
+            <Route path="/workflows/new" element={<CreateWorkflow />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Layout>

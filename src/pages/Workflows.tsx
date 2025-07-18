@@ -23,6 +23,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Link } from "react-router-dom";
 
 const WorkflowStep = ({ icon, title, description, agentName }: { icon: React.ReactNode, title: string, description: string, agentName?: string }) => (
   <Card className="w-full md:w-80 text-left shadow-lg hover:shadow-xl transition-shadow">
@@ -93,9 +94,11 @@ const Workflows = () => {
             <CardTitle>My Workflows</CardTitle>
             <CardDescription>Manage your automated agent workflows.</CardDescription>
           </div>
-          <Button>
-            <PlusCircle className="mr-2 h-4 w-4" />
-            Create New Workflow
+          <Button asChild>
+            <Link to="/workflows/new">
+              <PlusCircle className="mr-2 h-4 w-4" />
+              Create New Workflow
+            </Link>
           </Button>
         </CardHeader>
         <CardContent>
