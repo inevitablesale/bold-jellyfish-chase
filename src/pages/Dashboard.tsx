@@ -1,38 +1,74 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { agents } from "../data/agents";
 import { AgentCard } from "@/components/AgentCard";
-import { showError, showLoading, dismissToast } from "@/utils/toast";
+import { showError } from "@/utils/toast";
 import type { Agent } from "../data/agents";
 import { findBestMatch } from "@/lib/vector-search";
+import { Loader2 } from "lucide-react";
 
 const Dashboard = () => {
   const [request, setRequest] = useState(agents[0].exampleRequest);
   const [matchedAgents, setMatchedAgents] = useState<Agent[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [searchAttempted, setSearchAttempted] = useState(false);
 
   const handleMatch = async () => {
     setIsLoading(true);
-    setMatchedAgents([]);
-    const toastId = showLoading("Finding best agent...");
+    setSearchAttempted(true);
+    
+    // Artificial delay for better UX, so the loading state is visible
+    await new Promise(resolve => setTimeout(resolve, 500));
 
     try {
-      // This now uses the fast, simulated search
       const bestMatch = await findBestMatch(request, agents);
-      
-      if (bestMatch) {
-        setMatchedAgents([bestMatch]);
-      } else {
-        showError("No suitable agent found. Try rephrasing your request.");
-      }
+      setMatchedAgents(bestMatch ? [bestMatch] : []);
     } catch (error) {
       console.error("Search failed:", error);
       showError("An error occurred during the matching process.");
+      setMatchedAgents([]);
     } finally {
       setIsLoading(false);
-      dismissToast(toastId);
     }
+  };
+
+  const renderResults = () => {
+    if (isLoading) {
+      return (
+        <div className="text-center p-8">
+          <div className="flex justify-center items-center gap-2">
+            <Loader2 className="h-5 w-5 animate-spin" />
+            <h2 className="text-xl font-semibold tracking-tight">Finding best agent...</h2>
+          </div>
+          <p className="text-muted-foreground mt-2">Analyzing your request to find the perfect match.</p>
+        </div>
+      );
+    }
+
+    if (!searchAttempted) {
+      return null; // Don't show anything before the first search
+    }
+
+    if (matchedAgents.length > 0) {
+      return (
+        <div>
+          <h2 className="text-2xl font-bold text-center">Best Matched Agent</h2>
+          <div className="mt-6 grid gap-8 md:grid-cols-1 max-w-2xl mx-auto">
+            {matchedAgents.map((agent) => (
+              <AgentCard key={agent.id} agent={agent} />
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <div className="text-center p-8">
+        <h2 className="text-xl font-semibold tracking-tight">No Suitable Agent Found</h2>
+        <p className="text-muted-foreground mt-2">Please try rephrasing your request for better results.</p>
+      </div>
+    );
   };
 
   return (
@@ -54,8 +90,10 @@ const Dashboard = () => {
             value={request}
             onChange={(e) => setRequest(e.target.value)}
             className="flex-grow"
+            onKeyDown={(e) => e.key === 'Enter' && handleMatch()}
           />
           <Button onClick={handleMatch} disabled={isLoading}>
+            {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
             {isLoading ? "Matching..." : "Match Agent"}
           </Button>
         </div>
@@ -64,16 +102,9 @@ const Dashboard = () => {
         </p>
       </div>
 
-      {matchedAgents.length > 0 && (
-        <div className="mt-16">
-          <h2 className="text-2xl font-bold text-center">Best Matched Agent</h2>
-          <div className="mt-6 grid gap-8 md:grid-cols-1 max-w-2xl mx-auto">
-            {matchedAgents.map((agent) => (
-              <AgentCard key={agent.id} agent={agent} />
-            ))}
-          </div>
-        </div>
-      )}
+      <div className="mt-16">
+        {renderResults()}
+      </div>
     </div>
   );
 };
