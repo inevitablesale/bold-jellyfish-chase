@@ -113,10 +113,21 @@ const IndexPage = () => {
           {searchAttempted || isLoading ? (
             renderResults()
           ) : (
-            <div className="text-center max-w-2xl mx-auto pt-16">
+            <div className="text-center max-w-3xl mx-auto pt-16">
               <BotMessageSquare className="mx-auto h-12 w-12 text-primary" />
               <h1 className="text-3xl font-bold tracking-tight mt-4">How can I help you today?</h1>
               <p className="text-muted-foreground mt-2">Describe a task, and I'll find the best agent for the job.</p>
+              <div className="mt-12">
+                <p className="text-sm text-muted-foreground font-semibold uppercase tracking-wider">A Tech-Agnostic Platform Supporting</p>
+                <div className="mt-4 flex justify-center items-center flex-wrap gap-x-6 gap-y-2 text-muted-foreground">
+                  <span className="font-medium">N8N</span>
+                  <span className="font-medium">Make.com</span>
+                  <span className="font-medium">Apify</span>
+                  <span className="font-medium">LangChain</span>
+                  <span className="font-medium">Python</span>
+                  <span className="font-medium">Custom APIs</span>
+                </div>
+              </div>
             </div>
           )}
         </div>

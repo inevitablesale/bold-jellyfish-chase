@@ -19,7 +19,7 @@ const RegisterAgent = () => {
         <CardHeader>
           <CardTitle>Register a New Agent</CardTitle>
           <CardDescription>
-            Submit your agent to our ecosystem. Fill out the form below or upload a blueprint to get started.
+            Our platform is tech-agnostic. Whether your agent is a custom script, a complex workflow from Make.com/N8N, or a containerized application, you can integrate it here.
           </CardDescription>
         </CardHeader>
         <CardContent>

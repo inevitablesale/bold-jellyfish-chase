@@ -135,10 +135,11 @@ const ArchitecturePage = () => {
             <CardHeader className="text-center">
               <Box className="mx-auto h-6 w-6 mb-2" />
               <CardTitle className="text-lg">Agent Execution Layer</CardTitle>
+              <CardDescription>The key to our tech-agnostic approach.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-2 text-sm">
               <p><TechBadge>Kubernetes:</TechBadge> Orchestrates agent containers for scalability and resilience.</p>
-              <p><TechBadge>Docker:</TechBadge> Agents are packaged as standardized, isolated containers.</p>
+              <p><TechBadge>Docker:</TechBadge> Agents are packaged as standardized containers, allowing any technology (Python, Go, N8N, etc.) to run securely and independently.</p>
               <p><TechBadge>Istio:</TechBadge> Service mesh for secure communication between agents and services.</p>
             </CardContent>
           </Card>
