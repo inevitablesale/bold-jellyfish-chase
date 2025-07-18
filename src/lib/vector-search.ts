@@ -1,5 +1,10 @@
-import { pipeline, cos_sim } from '@xenova/transformers';
+import { pipeline, cos_sim, env } from '@xenova/transformers';
 import type { Agent } from '@/data/agents';
+
+// Disable web workers to prevent potential CORS issues in some environments.
+// By default, transformers.js will run models in a separate web worker.
+// We can disable this by setting the number of threads to 1.
+env.backends.onnx.wasm.numThreads = 1;
 
 // This is a singleton instance. We'll load the model only once.
 let extractor: any = null;
