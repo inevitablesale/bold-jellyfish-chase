@@ -134,7 +134,7 @@ const AgentExecution = () => {
                 {!isPurchased && <ShoppingCart className="mr-2 h-4 w-4" />}
                 {buttonText}
               </Button>
-              {isPurchased && !isRunning && (
+              {!isRunning && (
                 <Button variant="outline" asChild>
                   <Link to={`/symphonies/compose?agentId=${agent.id}`}>
                     <Sparkles className="mr-2 h-4 w-4" />
