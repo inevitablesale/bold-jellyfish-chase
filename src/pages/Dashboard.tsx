@@ -1,60 +1,60 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { agents } from "../data/agents";
 import { AgentCard } from "@/components/AgentCard";
-import { showError } from "@/utils/toast";
+import { showError, showLoading, dismissToast } from "@/utils/toast";
 import type { Agent } from "../data/agents";
+import { createAgentEmbeddings, findBestMatch } from "@/lib/vector-search";
 
 const Dashboard = () => {
   const [request, setRequest] = useState(agents[0].exampleRequest);
-  const [matchedAgents, setMatchedAgents] = useState<typeof agents>([]);
+  const [matchedAgents, setMatchedAgents] = useState<Agent[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isModelReady, setIsModelReady] = useState(false);
 
-  const handleMatch = () => {
+  // Pre-load the model and create embeddings on component mount
+  useEffect(() => {
+    const initialize = async () => {
+      const toastId = showLoading("Initializing AI model...");
+      try {
+        await createAgentEmbeddings(agents);
+        setIsModelReady(true);
+        dismissToast(toastId);
+      } catch (error) {
+        console.error("Failed to initialize AI model:", error);
+        showError("Could not load AI model. Please refresh.");
+        dismissToast(toastId);
+      }
+    };
+    initialize();
+  }, []);
+
+  const handleMatch = async () => {
+    if (!isModelReady) {
+      showError("AI model is not ready yet. Please wait a moment.");
+      return;
+    }
+    
     setIsLoading(true);
     setMatchedAgents([]);
+    const toastId = showLoading("Analyzing request with vector search...");
 
-    setTimeout(() => {
-      const requestWords = request
-        .toLowerCase()
-        .replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, "")
-        .split(/\s+/)
-        .filter(w => w.length > 2);
-
-      let bestMatch: { agent: Agent; score: number } | null = null;
-
-      agents.forEach(agent => {
-        let score = 0;
-        const lowerCaseSkills = agent.skills.join(' ').toLowerCase();
-        const lowerCaseName = agent.name.toLowerCase();
-        const lowerCaseDescription = agent.description.toLowerCase();
-
-        requestWords.forEach(word => {
-          if (lowerCaseSkills.includes(word)) {
-            score += 5; // Highest weight for skills
-          }
-          if (lowerCaseName.includes(word)) {
-            score += 3; // Medium weight for name
-          }
-          if (lowerCaseDescription.includes(word)) {
-            score += 1; // Low weight for description
-          }
-        });
-
-        if (!bestMatch || score > bestMatch.score) {
-          bestMatch = { agent, score };
-        }
-      });
-
-      if (bestMatch && bestMatch.score > 5) { // Require a minimum score to avoid bad matches
-        setMatchedAgents([bestMatch.agent]);
+    try {
+      const bestMatch = await findBestMatch(request, agents);
+      
+      if (bestMatch) {
+        setMatchedAgents([bestMatch]);
       } else {
         showError("No suitable agent found. Try rephrasing your request.");
       }
-      
+    } catch (error) {
+      console.error("Vector search failed:", error);
+      showError("An error occurred during the matching process.");
+    } finally {
       setIsLoading(false);
-    }, 1500);
+      dismissToast(toastId);
+    }
   };
 
   return (
@@ -77,20 +77,14 @@ const Dashboard = () => {
             onChange={(e) => setRequest(e.target.value)}
             className="flex-grow"
           />
-          <Button onClick={handleMatch} disabled={isLoading}>
-            {isLoading ? "Matching..." : "Match Agent"}
+          <Button onClick={handleMatch} disabled={isLoading || !isModelReady}>
+            {isLoading ? "Matching..." : (isModelReady ? "Match Agent" : "Model Loading...")}
           </Button>
         </div>
         <p className="mt-2 text-sm text-muted-foreground">
           Try requests like "generate leads", "market research", or "sync my crm".
         </p>
       </div>
-
-      {isLoading && (
-        <div className="mt-12 text-center">
-          <p>Analyzing request and finding the best agent...</p>
-        </div>
-      )}
 
       {matchedAgents.length > 0 && (
         <div className="mt-16">
