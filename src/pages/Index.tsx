@@ -7,7 +7,7 @@ import { AgentCard } from "@/components/AgentCard";
 import { showError } from "@/utils/toast";
 import type { Agent } from "../data/agents";
 import { findBestMatch } from "@/lib/vector-search";
-import { Loader2, BotMessageSquare, ArrowUp, Sparkles } from "lucide-react";
+import { Loader2, ArrowUp, Sparkles } from "lucide-react";
 import { AgentBuilderDialog } from "@/components/AgentBuilderDialog";
 
 const QUICK_START_SUGGESTIONS = [
@@ -121,10 +121,11 @@ const IndexPage = () => {
             renderResults()
           ) : (
             <>
-              <div className="text-center max-w-3xl mx-auto pt-16">
-                <BotMessageSquare className="mx-auto h-12 w-12 text-primary" />
-                <h1 className="text-3xl font-bold tracking-tight mt-4">How can I help you today?</h1>
-                <p className="text-muted-foreground mt-2">Describe a task, and I'll find the best agent for the job.</p>
+              <div className="text-center max-w-4xl mx-auto pt-16">
+                <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">Orchestrate Your Ambition</h1>
+                <p className="text-muted-foreground mt-4 text-lg max-w-3xl mx-auto">
+                  Describe any task, from market analysis to creative generation. Our platform will find, configure, and chain the right AI agents to get it done.
+                </p>
               </div>
 
               <div className="mt-16 max-w-5xl mx-auto">
@@ -146,7 +147,7 @@ const IndexPage = () => {
         </div>
       </main>
 
-      <div className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-t">
+      <div className="bg-background/80 backdrop-blur-sm border-t border-white/10">
         <div className="max-w-3xl mx-auto p-4 space-y-4">
           {!searchAttempted && !isLoading && (
             <div className="flex flex-wrap justify-center gap-2">
@@ -163,12 +164,13 @@ const IndexPage = () => {
               ))}
             </div>
           )}
-          <div className="relative">
+          <div className="relative group">
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-pink-600 to-purple-600 rounded-lg blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
             <Textarea
-              placeholder="e.g., Find me 100 new leads for..."
+              placeholder="e.g., Analyze competitor ads for Nike and generate a report..."
               value={request}
               onChange={(e) => setRequest(e.target.value)}
-              className="pr-12 min-h-[48px] resize-none"
+              className="pr-12 min-h-[52px] resize-none relative bg-background"
               onKeyDown={(e) => {
                 if (e.key === 'Enter' && !e.shiftKey) {
                   e.preventDefault();
@@ -185,6 +187,9 @@ const IndexPage = () => {
               <ArrowUp className="h-4 w-4" />
             </Button>
           </div>
+           <p className="text-xs text-center text-muted-foreground">
+            Press <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">Enter</kbd> to send
+          </p>
         </div>
       </div>
 
