@@ -136,9 +136,9 @@ const AgentExecution = () => {
               </Button>
               {isPurchased && !isRunning && (
                 <Button variant="outline" asChild>
-                  <Link to={`/workflows/new?agentId=${agent.id}`}>
+                  <Link to={`/symphonies/compose?agentId=${agent.id}`}>
                     <Sparkles className="mr-2 h-4 w-4" />
-                    Create Workflow
+                    Add to Symphony
                   </Link>
                 </Button>
               )}

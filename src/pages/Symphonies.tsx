@@ -10,7 +10,7 @@ import {
   Mail,
   Bot,
   PlusCircle,
-  Sparkles,
+  Music,
   ArrowDown,
   PlayCircle,
   Pencil,
@@ -25,7 +25,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Link } from "react-router-dom";
 
-const WorkflowStep = ({ icon, title, description, agentName }: { icon: React.ReactNode, title: string, description: string, agentName?: string }) => (
+const SymphonyStep = ({ icon, title, description, agentName }: { icon: React.ReactNode, title: string, description: string, agentName?: string }) => (
   <Card className="w-full md:w-80 text-left shadow-lg hover:shadow-xl transition-shadow">
     <CardHeader className="flex flex-row items-start gap-4 space-y-0 pb-2">
       <div className="bg-muted p-3 rounded-lg">{icon}</div>
@@ -42,29 +42,29 @@ const WorkflowStep = ({ icon, title, description, agentName }: { icon: React.Rea
   </Card>
 );
 
-const Workflows = () => {
+const Symphonies = () => {
   return (
     <div className="container mx-auto p-4 md:p-8">
       <div className="text-center mb-12">
         <h1 className="text-3xl font-bold tracking-tight sm:text-4xl flex items-center justify-center gap-3">
-          <Sparkles className="h-8 w-8 text-primary" />
-          The AI Canvas: Build Workflows Visually
+          <Music className="h-8 w-8 text-primary" />
+          The Conductor's Podium
         </h1>
         <p className="mt-3 max-w-3xl mx-auto text-lg text-muted-foreground">
-          Go beyond single agents. Chain them together on our visual canvas to create powerful, multi-step automations. No code required.
+          Go beyond single agents. Compose powerful, multi-step AI symphonies on a visual canvas. No code required.
         </p>
       </div>
 
       <div className="relative mb-12">
         <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8">
-          <WorkflowStep 
+          <SymphonyStep 
             icon={<MousePointer className="h-6 w-6 text-primary" />}
             title="Trigger"
             description="Start with a schedule, webhook, or manual run."
           />
           <ArrowRight className="hidden md:block h-8 w-8 shrink-0 text-muted-foreground" />
           <ArrowDown className="md:hidden h-8 w-8 shrink-0 text-muted-foreground my-2" />
-          <WorkflowStep 
+          <SymphonyStep 
             icon={<DatabaseZap className="h-6 w-6 text-primary" />}
             title="Run Agent"
             description="Execute an agent from the marketplace."
@@ -72,7 +72,7 @@ const Workflows = () => {
           />
           <ArrowRight className="hidden md:block h-8 w-8 shrink-0 text-muted-foreground" />
           <ArrowDown className="md:hidden h-8 w-8 shrink-0 text-muted-foreground my-2" />
-          <WorkflowStep 
+          <SymphonyStep 
             icon={<FileText className="h-6 w-6 text-primary" />}
             title="Run Agent"
             description="Pass the output to another agent."
@@ -80,7 +80,7 @@ const Workflows = () => {
           />
           <ArrowRight className="hidden md:block h-8 w-8 shrink-0 text-muted-foreground" />
           <ArrowDown className="md:hidden h-8 w-8 shrink-0 text-muted-foreground my-2" />
-           <WorkflowStep 
+           <SymphonyStep 
             icon={<Mail className="h-6 w-6 text-primary" />}
             title="Action"
             description="Send results via email or to a webhook."
@@ -91,13 +91,13 @@ const Workflows = () => {
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">
           <div>
-            <CardTitle>My Workflows</CardTitle>
-            <CardDescription>Manage your automated agent workflows.</CardDescription>
+            <CardTitle>My Symphonies</CardTitle>
+            <CardDescription>Manage your automated agent compositions.</CardDescription>
           </div>
           <Button asChild>
-            <Link to="/workflows/new">
+            <Link to="/symphonies/compose">
               <PlusCircle className="mr-2 h-4 w-4" />
-              Create New Workflow
+              Compose New Symphony
             </Link>
           </Button>
         </CardHeader>
@@ -105,16 +105,16 @@ const Workflows = () => {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Name</TableHead>
+                <TableHead>Composition</TableHead>
                 <TableHead>Status</TableHead>
                 <TableHead>Trigger</TableHead>
-                <TableHead>Last Run</TableHead>
+                <TableHead>Last Performed</TableHead>
                 <TableHead className="text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               <TableRow>
-                <TableCell className="font-medium">Automated Lead Enrichment</TableCell>
+                <TableCell className="font-medium">Lead Enrichment Concerto</TableCell>
                 <TableCell><Badge>Active</Badge></TableCell>
                 <TableCell>Manual</TableCell>
                 <TableCell>2 hours ago</TableCell>
@@ -142,7 +142,7 @@ const Workflows = () => {
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell className="font-medium">Daily Social Media Post</TableCell>
+                <TableCell className="font-medium">Social Media Overture</TableCell>
                 <TableCell><Badge variant="secondary">Inactive</Badge></TableCell>
                 <TableCell>Scheduled (Daily at 9am)</TableCell>
                 <TableCell>1 day ago</TableCell>
@@ -177,4 +177,4 @@ const Workflows = () => {
   );
 };
 
-export default Workflows;
+export default Symphonies;

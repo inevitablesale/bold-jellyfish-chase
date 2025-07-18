@@ -8,9 +8,9 @@ import AgentMarketplace from "./pages/AgentMarketplace";
 import AgentExecution from "./pages/AgentExecution";
 import RegisterAgent from "./pages/RegisterAgent";
 import ArchitecturePage from "./pages/Architecture";
-import Workflows from "./pages/Workflows";
+import Symphonies from "./pages/Symphonies";
 import { Layout } from "./components/Layout";
-import CreateWorkflow from "./pages/CreateWorkflow";
+import ComposeSymphony from "./pages/ComposeSymphony";
 
 const queryClient = new QueryClient();
 
@@ -26,8 +26,8 @@ const App = () => (
             <Route path="/agent/:id" element={<AgentExecution />} />
             <Route path="/register-agent" element={<RegisterAgent />} />
             <Route path="/architecture" element={<ArchitecturePage />} />
-            <Route path="/workflows" element={<Workflows />} />
-            <Route path="/workflows/new" element={<CreateWorkflow />} />
+            <Route path="/symphonies" element={<Symphonies />} />
+            <Route path="/symphonies/compose" element={<ComposeSymphony />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Layout>

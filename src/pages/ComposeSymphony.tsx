@@ -4,12 +4,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { PlusCircle, Bot, Play, Trash2, GripVertical, ArrowRight, MousePointer } from "lucide-react";
+import { PlusCircle, Bot, Play, Trash2, ArrowRight, MousePointer } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { showSuccess, showError } from "@/utils/toast";
 import { agents as allAgents, Agent } from "@/data/agents";
 
-type WorkflowStep = {
+type SymphonyStep = {
   id: string;
   type: 'trigger' | 'agent';
   content: {
@@ -19,23 +19,23 @@ type WorkflowStep = {
   };
 };
 
-const renumberSteps = (steps: WorkflowStep[]) => {
+const renumberSteps = (steps: SymphonyStep[]) => {
   return steps.map((step, index) => {
     const newTitle = step.type === 'trigger'
       ? `1. Trigger`
-      : `${index + 1}. Run Agent`;
+      : `${index + 1}. Instrument`;
     return { ...step, content: { ...step.content, title: newTitle } };
   });
 };
 
-const CreateWorkflow = () => {
+const ComposeSymphony = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const [workflowName, setWorkflowName] = useState('');
-  const [steps, setSteps] = useState<WorkflowStep[]>([]);
+  const [symphonyName, setSymphonyName] = useState('');
+  const [steps, setSteps] = useState<SymphonyStep[]>([]);
 
   useEffect(() => {
-    const initialSteps: WorkflowStep[] = [
+    const initialSteps: SymphonyStep[] = [
       {
         id: `trigger-${Date.now()}`,
         type: 'trigger',
@@ -54,11 +54,11 @@ const CreateWorkflow = () => {
           id: `agent-${agent.id}-${Date.now()}`,
           type: 'agent',
           content: {
-            title: '2. Run Agent',
+            title: '2. Instrument',
             agent: agent,
           },
         });
-        setWorkflowName(`${agent.name} Workflow`);
+        setSymphonyName(`${agent.name} Symphony`);
       }
     }
     setSteps(renumberSteps(initialSteps));
@@ -70,21 +70,21 @@ const CreateWorkflow = () => {
       showError("Could not find a sample agent to add.");
       return;
     }
-    const newStep: WorkflowStep = {
+    const newStep: SymphonyStep = {
       id: `agent-${agentToAdd.id}-${Date.now()}`,
       type: 'agent',
       content: {
-        title: 'Run Agent', // Will be renumbered
+        title: 'Instrument', // Will be renumbered
         agent: agentToAdd,
       },
     };
     setSteps(prevSteps => renumberSteps([...prevSteps, newStep]));
-    showSuccess(`Added "${agentToAdd.name}" to the workflow.`);
+    showSuccess(`Added "${agentToAdd.name}" to the symphony.`);
   };
 
   const handleDeleteStep = (id: string) => {
     setSteps(prevSteps => renumberSteps(prevSteps.filter(step => step.id !== id)));
-    showSuccess("Step removed.");
+    showSuccess("Instrument removed from symphony.");
   };
 
   const handleChangeTrigger = () => {
@@ -92,36 +92,36 @@ const CreateWorkflow = () => {
   };
 
   const handleSave = () => {
-    if (!workflowName.trim()) {
-      showError("Please provide a name for the workflow.");
+    if (!symphonyName.trim()) {
+      showError("Please provide a name for your symphony.");
       return;
     }
-    showSuccess(`Workflow "${workflowName}" saved successfully!`);
-    navigate("/workflows");
+    showSuccess(`Symphony "${symphonyName}" is now ready for performance!`);
+    navigate("/symphonies");
   };
 
   return (
     <div className="container mx-auto p-4 md:p-8">
       <Card className="bg-card/50">
         <CardHeader>
-          <CardTitle>Create a New Workflow</CardTitle>
+          <CardTitle>Compose a New Symphony</CardTitle>
           <CardDescription>
-            Build a multi-step automation by chaining agents together on the visual canvas.
+            Arrange your AI instruments on the canvas to create a multi-step composition.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-8">
           <div className="space-y-2">
-            <Label htmlFor="workflow-name">Workflow Name</Label>
+            <Label htmlFor="symphony-name">Symphony Name</Label>
             <Input 
-              id="workflow-name" 
-              placeholder="e.g., Daily Market Analysis & Report" 
-              value={workflowName}
-              onChange={(e) => setWorkflowName(e.target.value)}
+              id="symphony-name" 
+              placeholder="e.g., Concerto for Market Analysis" 
+              value={symphonyName}
+              onChange={(e) => setSymphonyName(e.target.value)}
             />
           </div>
 
           <div className="space-y-4">
-            <Label>Workflow Canvas</Label>
+            <Label>Composition Canvas</Label>
             <div className="p-6 border-2 border-dashed rounded-lg bg-muted/20 min-h-[300px]">
               <div className="flex items-center gap-4 overflow-x-auto pb-4">
                 {steps.map((step, index) => (
@@ -166,10 +166,10 @@ const CreateWorkflow = () => {
           </div>
 
           <div className="flex justify-end gap-2">
-            <Button variant="outline" onClick={() => navigate("/workflows")}>Cancel</Button>
+            <Button variant="outline" onClick={() => navigate("/symphonies")}>Cancel</Button>
             <Button onClick={handleSave}>
               <Play className="mr-2 h-4 w-4" />
-              Save and Activate
+              Conduct Symphony
             </Button>
           </div>
         </CardContent>
@@ -178,4 +178,4 @@ const CreateWorkflow = () => {
   );
 };
 
-export default CreateWorkflow;
+export default ComposeSymphony;
