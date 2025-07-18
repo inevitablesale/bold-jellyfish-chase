@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { agents } from "../data/agents";
 import { AgentCard } from "@/components/AgentCard";
+import { showError } from "@/utils/toast";
 
 const Dashboard = () => {
   const [request, setRequest] = useState(agents[0].exampleRequest);
@@ -11,10 +12,32 @@ const Dashboard = () => {
 
   const handleMatch = () => {
     setIsLoading(true);
-    // Simulate API call
+    setMatchedAgents([]);
+
     setTimeout(() => {
-      // For this demo, we'll just "match" the first agent.
-      setMatchedAgents([agents[0]]);
+      const requestWords = request.toLowerCase().split(/\s+/);
+      let bestMatch = null;
+      let maxScore = 0;
+
+      agents.forEach(agent => {
+        let score = 0;
+        agent.skills.forEach(skill => {
+          if (requestWords.some(word => skill.toLowerCase().includes(word))) {
+            score++;
+          }
+        });
+        if (score > maxScore) {
+          maxScore = score;
+          bestMatch = agent;
+        }
+      });
+
+      if (bestMatch) {
+        setMatchedAgents([bestMatch]);
+      } else {
+        showError("No suitable agent found. Try rephrasing your request.");
+      }
+      
       setIsLoading(false);
     }, 1500);
   };
@@ -44,19 +67,19 @@ const Dashboard = () => {
           </Button>
         </div>
         <p className="mt-2 text-sm text-muted-foreground">
-          Enter any business request and our platform will automatically match it with the most relevant AI agent.
+          Try requests like "generate leads", "market research", or "sync my crm".
         </p>
       </div>
 
       {isLoading && (
         <div className="mt-12 text-center">
-          <p>Finding the best agent for your request...</p>
+          <p>Analyzing request and finding the best agent...</p>
         </div>
       )}
 
       {matchedAgents.length > 0 && (
         <div className="mt-16">
-          <h2 className="text-2xl font-bold text-center">Matched Agent</h2>
+          <h2 className="text-2xl font-bold text-center">Best Matched Agent</h2>
           <div className="mt-6 grid gap-8 md:grid-cols-1 max-w-2xl mx-auto">
             {matchedAgents.map((agent) => (
               <AgentCard key={agent.id} agent={agent} />

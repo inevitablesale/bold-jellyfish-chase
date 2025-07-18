@@ -7,7 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Download, Terminal } from "lucide-react";
+import { Download, Terminal, CheckCircle, Clock } from "lucide-react";
 
 const AgentExecution = () => {
   const { id } = useParams<{ id: string }>();
@@ -16,6 +16,7 @@ const AgentExecution = () => {
   const [progress, setProgress] = useState(0);
   const [log, setLog] = useState<string[]>([]);
   const [isComplete, setIsComplete] = useState(false);
+  const [executionTime, setExecutionTime] = useState(0);
 
   useEffect(() => {
     const foundAgent = agents.find((a) => a.id === id);
@@ -27,11 +28,14 @@ const AgentExecution = () => {
     setIsComplete(false);
     setProgress(0);
     setLog(["[INFO] Starting agent execution..."]);
+    const startTime = Date.now();
 
     const interval = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {
           clearInterval(interval);
+          const endTime = Date.now();
+          setExecutionTime((endTime - startTime) / 1000);
           setIsRunning(false);
           setIsComplete(true);
           setLog((prevLog) => [...prevLog, `[SUCCESS] Agent X identified and delivered 100 leads from source Y.`, "[INFO] Execution finished."]);
@@ -119,42 +123,69 @@ const AgentExecution = () => {
           )}
 
           {isComplete && (
-            <div className="mt-6">
-              <h4 className="font-semibold">Results</h4>
-              <p className="text-sm text-muted-foreground mt-1">Agent task completed successfully. Here are the results.</p>
-              <Card className="mt-4">
+            <div className="mt-6 space-y-6">
+              <Card>
                 <CardHeader>
-                  <CardTitle>Generated Leads</CardTitle>
-                  <CardDescription>A sample of the generated leads. Full list is available for download.</CardDescription>
+                  <CardTitle className="flex items-center"><CheckCircle className="mr-2 h-5 w-5 text-green-500" /> Performance Summary</CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead>Company</TableHead>
-                        <TableHead>Contact</TableHead>
-                        <TableHead>Email</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      <TableRow>
-                        <TableCell>TechCorp</TableCell>
-                        <TableCell>John Doe</TableCell>
-                        <TableCell>john.doe@techcorp.com</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>Innovate LLC</TableCell>
-                        <TableCell>Jane Smith</TableCell>
-                        <TableCell>jane.smith@innovate.com</TableCell>
-                      </TableRow>
-                    </TableBody>
-                  </Table>
+                <CardContent className="grid gap-4 sm:grid-cols-3">
+                  <div className="flex items-center space-x-3">
+                    <Clock className="h-6 w-6 text-muted-foreground" />
+                    <div>
+                      <p className="text-sm text-muted-foreground">Execution Time</p>
+                      <p className="text-lg font-bold">{executionTime}s</p>
+                    </div>
+                  </div>
+                   <div className="flex items-center space-x-3">
+                    <CheckCircle className="h-6 w-6 text-muted-foreground" />
+                    <div>
+                      <p className="text-sm text-muted-foreground">Results Count</p>
+                      <p className="text-lg font-bold">100</p>
+                    </div>
+                  </div>
+                   <div className="flex items-center space-x-3">
+                    <Download className="h-6 w-6 text-muted-foreground" />
+                    <div>
+                      <p className="text-sm text-muted-foreground">Output Size</p>
+                      <p className="text-lg font-bold">12 KB</p>
+                    </div>
+                  </div>
                 </CardContent>
               </Card>
-              <Button onClick={handleDownload} className="mt-4">
-                <Download className="mr-2 h-4 w-4" />
-                Download Results ({agent.outputFormat})
-              </Button>
+
+              <div>
+                <h4 className="font-semibold">Results</h4>
+                <p className="text-sm text-muted-foreground mt-1">A sample of the generated leads. Full list is available for download.</p>
+                <Card className="mt-4">
+                  <CardContent className="pt-6">
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Company</TableHead>
+                          <TableHead>Contact</TableHead>
+                          <TableHead>Email</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        <TableRow>
+                          <TableCell>TechCorp</TableCell>
+                          <TableCell>John Doe</TableCell>
+                          <TableCell>john.doe@techcorp.com</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>Innovate LLC</TableCell>
+                          <TableCell>Jane Smith</TableCell>
+                          <TableCell>jane.smith@innovate.com</TableCell>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                  </CardContent>
+                </Card>
+                <Button onClick={handleDownload} className="mt-4">
+                  <Download className="mr-2 h-4 w-4" />
+                  Download Full Results ({agent.outputFormat})
+                </Button>
+              </div>
             </div>
           )}
         </CardContent>

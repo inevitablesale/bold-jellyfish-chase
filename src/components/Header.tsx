@@ -16,12 +16,15 @@ export const Header = () => {
           <BotMessageSquare className="h-6 w-6" />
           <span className="font-bold">Agent Platform</span>
         </NavLink>
-        <nav className="flex items-center space-x-4 lg:space-x-6">
+        <nav className="flex flex-1 items-center space-x-4 lg:space-x-6">
           <NavLink to="/" className={navLinkClasses}>
             Dashboard
           </NavLink>
           <NavLink to="/marketplace" className={navLinkClasses}>
             Marketplace
+          </NavLink>
+          <NavLink to="/register-agent" className={navLinkClasses}>
+            Register Agent
           </NavLink>
         </nav>
       </div>
