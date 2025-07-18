@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, ShoppingCart, Cpu } from "lucide-react";
 import type { Agent, AgentSource } from "../data/agents";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 interface AgentCardProps {
   agent: Agent;
@@ -62,11 +63,17 @@ export const AgentCard = ({ agent }: AgentCardProps) => {
             </div>
           </div>
         )}
-        <div className="text-xs text-muted-foreground pt-2">
-          Source: <Badge variant={getBadgeVariant(agent.source)} className="text-xs">{agent.source}</Badge>
-        </div>
       </CardContent>
-      <CardFooter>
+      <CardFooter className="flex-col items-start gap-3 pt-4">
+        <div className="flex items-center justify-between w-full text-xs text-muted-foreground">
+          <div className="flex items-center gap-1.5">
+            <Avatar className="h-5 w-5">
+              <AvatarFallback className="text-[10px]">{agent.author.charAt(0)}</AvatarFallback>
+            </Avatar>
+            <span>By {agent.author}</span>
+          </div>
+          <Badge variant={getBadgeVariant(agent.source)} className="text-xs">{agent.source}</Badge>
+        </div>
         <Button asChild className="w-full">
           <Link to={`/agent/${agent.id}`}>
             {agent.price ? 'View & Purchase' : 'View Agent'}

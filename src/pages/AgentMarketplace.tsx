@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { agents } from "../data/agents";
 import { AgentCard } from "@/components/AgentCard";
 import { Button } from "@/components/ui/button";
+import { Sparkles } from "lucide-react";
 
 type FilterType = 'all' | 'free' | 'paid';
 
@@ -25,7 +27,18 @@ const AgentMarketplace = () => {
         </p>
       </div>
 
-      <div className="mt-8 flex justify-center gap-2">
+      <div className="my-8 p-6 bg-card border rounded-lg text-center">
+        <Sparkles className="mx-auto h-8 w-8 text-primary mb-2" />
+        <h2 className="text-2xl font-bold tracking-tight">Become a Creator</h2>
+        <p className="mt-2 text-muted-foreground max-w-xl mx-auto">
+          Have a powerful workflow or a custom automation? Publish it on our marketplace and share it with the world.
+        </p>
+        <Button asChild className="mt-4">
+          <Link to="/register-agent">Publish Your Agent</Link>
+        </Button>
+      </div>
+
+      <div className="flex justify-center gap-2">
         <Button variant={filter === 'all' ? 'default' : 'outline'} onClick={() => setFilter('all')}>All</Button>
         <Button variant={filter === 'free' ? 'default' : 'outline'} onClick={() => setFilter('free')}>Free</Button>
         <Button variant={filter === 'paid' ? 'default' : 'outline'} onClick={() => setFilter('paid')}>Paid</Button>
