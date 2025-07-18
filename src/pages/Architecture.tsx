@@ -204,10 +204,10 @@ const ArchitecturePage = () => {
             <Card className="flex-1 z-10 bg-card">
               <CardHeader>
                 <UploadCloud className="mx-auto h-8 w-8 mb-2" />
-                <CardTitle className="text-lg">1. Submit & Review</CardTitle>
+                <CardTitle className="text-lg">1. Submit Blueprint</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-muted-foreground">Developer submits agent blueprint (e.g., Make.com JSON, Dockerfile) via a Git-based workflow.</p>
+                <p className="text-sm text-muted-foreground">Developer submits agent via our adaptive form (Git repo, API endpoint, JSON blueprint, etc.).</p>
               </CardContent>
             </Card>
             <Card className="flex-1 z-10 bg-card">
@@ -216,7 +216,7 @@ const ArchitecturePage = () => {
                 <CardTitle className="text-lg">2. CI/CD Pipeline</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-muted-foreground">A CI/CD pipeline (GitHub Actions) runs security scans, builds the Docker image, and runs tests.</p>
+                <p className="text-sm text-muted-foreground">A CI/CD pipeline (GitHub Actions) runs security scans, builds the Docker image if needed, and runs tests.</p>
               </CardContent>
             </Card>
             <Card className="flex-1 z-10 bg-card">
@@ -225,7 +225,7 @@ const ArchitecturePage = () => {
                 <CardTitle className="text-lg">3. Publish to Registry</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-muted-foreground">On success, the image is pushed to a container registry and its metadata is saved to the Agent Registry.</p>
+                <p className="text-sm text-muted-foreground">On success, the agent is published to our internal registry and becomes available in the marketplace.</p>
               </CardContent>
             </Card>
           </div>
