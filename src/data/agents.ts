@@ -8,6 +8,8 @@ export interface Agent {
   version: string;
   outputFormat: 'CSV' | 'JSON' | 'PDF';
   exampleRequest: string;
+  price?: number;
+  pricingModel?: 'one-time' | 'subscription';
 }
 
 export const agents: Agent[] = [
@@ -20,7 +22,9 @@ export const agents: Agent[] = [
     author: 'Community',
     version: '1.2.0',
     outputFormat: 'CSV',
-    exampleRequest: 'Find me 100 new leads for aisymphony.ai, selling sales AI agents'
+    exampleRequest: 'Find me 100 new leads for aisymphony.ai, selling sales AI agents',
+    price: 25,
+    pricingModel: 'one-time',
   },
   {
     id: 'market-research-1',
@@ -31,7 +35,9 @@ export const agents: Agent[] = [
     author: 'Our Team',
     version: '2.0.1',
     outputFormat: 'PDF',
-    exampleRequest: 'Analyze the market for AI-powered sales tools'
+    exampleRequest: 'Analyze the market for AI-powered sales tools',
+    price: 99,
+    pricingModel: 'subscription',
   },
   {
     id: 'n8n-social-poster',

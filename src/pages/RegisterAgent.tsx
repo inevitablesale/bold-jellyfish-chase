@@ -9,8 +9,6 @@ import { showSuccess } from "@/utils/toast";
 const RegisterAgent = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // In a real app, this would submit data to a backend.
-    // For this demo, we'll just show a success message.
     showSuccess("Agent submitted for review!");
   };
 
@@ -20,7 +18,7 @@ const RegisterAgent = () => {
         <CardHeader>
           <CardTitle>Register a New Agent</CardTitle>
           <CardDescription>
-            Submit your agent to our ecosystem. Please provide the following metadata for review.
+            Submit your agent to our ecosystem. Set a price to monetize your creation.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -77,6 +75,28 @@ const RegisterAgent = () => {
                <p className="text-sm text-muted-foreground">
                 Provide the endpoint for our engine to call your agent.
               </p>
+            </div>
+            <div className="border-t pt-6 space-y-4">
+               <h4 className="text-lg font-medium">Monetization</h4>
+               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                 <div className="space-y-2">
+                   <Label htmlFor="pricing-model">Pricing Model</Label>
+                   <Select>
+                     <SelectTrigger id="pricing-model">
+                       <SelectValue placeholder="Select a model" />
+                     </SelectTrigger>
+                     <SelectContent>
+                       <SelectItem value="free">Free</SelectItem>
+                       <SelectItem value="one-time">One-Time Purchase</SelectItem>
+                       <SelectItem value="subscription">Subscription</SelectItem>
+                     </SelectContent>
+                   </Select>
+                 </div>
+                 <div className="space-y-2">
+                   <Label htmlFor="price">Price (USD)</Label>
+                   <Input id="price" type="number" placeholder="e.g., 25" />
+                 </div>
+               </div>
             </div>
             <Button type="submit" className="w-full md:w-auto">Submit for Review</Button>
           </form>

@@ -7,7 +7,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Download, Terminal, CheckCircle, Clock } from "lucide-react";
+import { Download, Terminal, CheckCircle, Clock, ShoppingCart } from "lucide-react";
+import { showSuccess } from "@/utils/toast";
 
 const AgentExecution = () => {
   const { id } = useParams<{ id: string }>();
@@ -17,13 +18,22 @@ const AgentExecution = () => {
   const [log, setLog] = useState<string[]>([]);
   const [isComplete, setIsComplete] = useState(false);
   const [executionTime, setExecutionTime] = useState(0);
+  const [isPurchased, setIsPurchased] = useState(false);
 
   useEffect(() => {
     const foundAgent = agents.find((a) => a.id === id);
     setAgent(foundAgent || null);
+    if (foundAgent && !foundAgent.price) {
+      setIsPurchased(true); // Free agents are considered "purchased"
+    }
   }, [id]);
 
   const handleRunAgent = () => {
+    if (agent?.price && !isPurchased) {
+      showSuccess(`Purchased "${agent.name}" successfully!`);
+      setIsPurchased(true);
+    }
+
     setIsRunning(true);
     setIsComplete(false);
     setProgress(0);
@@ -75,6 +85,8 @@ const AgentExecution = () => {
     );
   }
 
+  const buttonText = isPurchased ? (isRunning ? "Running..." : "Run Agent") : `Purchase & Run ($${agent.price})`;
+
   return (
     <div className="container mx-auto p-4 md:p-8">
       <Card>
@@ -105,7 +117,8 @@ const AgentExecution = () => {
             <h3 className="text-lg font-semibold">Execute Agent</h3>
             <div className="mt-4 flex items-center gap-4">
               <Button onClick={handleRunAgent} disabled={isRunning}>
-                {isRunning ? "Running..." : "Run Agent"}
+                {!isPurchased && <ShoppingCart className="mr-2 h-4 w-4" />}
+                {buttonText}
               </Button>
               {isRunning && <Progress value={progress} className="w-[60%]" />}
             </div>
