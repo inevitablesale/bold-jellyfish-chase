@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { agents as initialAgents } from "../data/agents";
@@ -106,6 +107,12 @@ const IndexPage = () => {
     );
   };
 
+  const featuredAgents = [
+    agentsList.find(a => a.id === 'lead-gen-1'),
+    agentsList.find(a => a.id === 'n8n-social-poster'),
+    agentsList.find(a => a.id === 'comfyui-text2img-1'),
+  ].filter(Boolean) as Agent[];
+
   return (
     <div className="flex flex-col h-full" style={{ height: 'calc(100vh - 57px)' }}>
       <main className="flex-1 overflow-y-auto">
@@ -113,22 +120,28 @@ const IndexPage = () => {
           {searchAttempted || isLoading ? (
             renderResults()
           ) : (
-            <div className="text-center max-w-3xl mx-auto pt-16">
-              <BotMessageSquare className="mx-auto h-12 w-12 text-primary" />
-              <h1 className="text-3xl font-bold tracking-tight mt-4">How can I help you today?</h1>
-              <p className="text-muted-foreground mt-2">Describe a task, and I'll find the best agent for the job.</p>
-              <div className="mt-12">
-                <p className="text-sm text-muted-foreground font-semibold uppercase tracking-wider">A Tech-Agnostic Platform Supporting</p>
-                <div className="mt-4 flex justify-center items-center flex-wrap gap-x-6 gap-y-2 text-muted-foreground">
-                  <span className="font-medium">N8N</span>
-                  <span className="font-medium">Make.com</span>
-                  <span className="font-medium">Apify</span>
-                  <span className="font-medium">LangChain</span>
-                  <span className="font-medium">Python</span>
-                  <span className="font-medium">Custom APIs</span>
+            <>
+              <div className="text-center max-w-3xl mx-auto pt-16">
+                <BotMessageSquare className="mx-auto h-12 w-12 text-primary" />
+                <h1 className="text-3xl font-bold tracking-tight mt-4">How can I help you today?</h1>
+                <p className="text-muted-foreground mt-2">Describe a task, and I'll find the best agent for the job.</p>
+              </div>
+
+              <div className="mt-16 max-w-5xl mx-auto">
+                <h2 className="text-2xl font-bold text-center mb-2">A Universe of Capabilities</h2>
+                <p className="text-muted-foreground text-center mb-8 max-w-2xl mx-auto">
+                  Our tech-agnostic platform supports agents from any source. Here are a few examples from across the ecosystem.
+                </p>
+                <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+                  {featuredAgents.map(agent => <AgentCard key={agent.id} agent={agent} />)}
+                </div>
+                <div className="text-center mt-12">
+                  <Button asChild size="lg">
+                    <Link to="/marketplace">Explore All Agents</Link>
+                  </Button>
                 </div>
               </div>
-            </div>
+            </>
           )}
         </div>
       </main>
