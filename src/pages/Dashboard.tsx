@@ -5,42 +5,20 @@ import { agents } from "../data/agents";
 import { AgentCard } from "@/components/AgentCard";
 import { showError, showLoading, dismissToast } from "@/utils/toast";
 import type { Agent } from "../data/agents";
-import { createAgentEmbeddings, findBestMatch } from "@/lib/vector-search";
+import { findBestMatch } from "@/lib/vector-search";
 
 const Dashboard = () => {
   const [request, setRequest] = useState(agents[0].exampleRequest);
   const [matchedAgents, setMatchedAgents] = useState<Agent[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [isModelReady, setIsModelReady] = useState(false);
-
-  // Pre-load the model and create embeddings on component mount
-  useEffect(() => {
-    const initialize = async () => {
-      const toastId = showLoading("Initializing AI model...");
-      try {
-        await createAgentEmbeddings(agents);
-        setIsModelReady(true);
-        dismissToast(toastId);
-      } catch (error) {
-        console.error("Failed to initialize AI model:", error);
-        showError("Could not load AI model. Please refresh.");
-        dismissToast(toastId);
-      }
-    };
-    initialize();
-  }, []);
 
   const handleMatch = async () => {
-    if (!isModelReady) {
-      showError("AI model is not ready yet. Please wait a moment.");
-      return;
-    }
-    
     setIsLoading(true);
     setMatchedAgents([]);
-    const toastId = showLoading("Analyzing request with vector search...");
+    const toastId = showLoading("Finding best agent...");
 
     try {
+      // This now uses the fast, simulated search
       const bestMatch = await findBestMatch(request, agents);
       
       if (bestMatch) {
@@ -49,7 +27,7 @@ const Dashboard = () => {
         showError("No suitable agent found. Try rephrasing your request.");
       }
     } catch (error) {
-      console.error("Vector search failed:", error);
+      console.error("Search failed:", error);
       showError("An error occurred during the matching process.");
     } finally {
       setIsLoading(false);
@@ -77,8 +55,8 @@ const Dashboard = () => {
             onChange={(e) => setRequest(e.target.value)}
             className="flex-grow"
           />
-          <Button onClick={handleMatch} disabled={isLoading || !isModelReady}>
-            {isLoading ? "Matching..." : (isModelReady ? "Match Agent" : "Model Loading...")}
+          <Button onClick={handleMatch} disabled={isLoading}>
+            {isLoading ? "Matching..." : "Match Agent"}
           </Button>
         </div>
         <p className="mt-2 text-sm text-muted-foreground">
