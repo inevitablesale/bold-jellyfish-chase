@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Agent } from '@/data/agents';
 import { showSuccess } from '@/utils/toast';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Sparkles } from 'lucide-react';
 
 interface AgentBuilderDialogProps {
   isOpen: boolean;
@@ -84,6 +84,7 @@ export const AgentBuilderDialog = ({ isOpen, setIsOpen, onAgentCreate, initialQu
         <DialogFooter>
           <Button onClick={handleBuildAgent} disabled={isBuilding}>
             {isBuilding && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            {!isBuilding && <Sparkles className="mr-2 h-4 w-4" />}
             {isBuilding ? 'Building with AI...' : 'Build Agent'}
           </Button>
         </DialogFooter>
