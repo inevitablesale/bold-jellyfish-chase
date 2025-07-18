@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { agents } from "../data/agents";
 import { AgentCard } from "@/components/AgentCard";
 import { showError } from "@/utils/toast";
+import type { Agent } from "../data/agents";
 
 const Dashboard = () => {
   const [request, setRequest] = useState(agents[0].exampleRequest);
@@ -15,25 +16,39 @@ const Dashboard = () => {
     setMatchedAgents([]);
 
     setTimeout(() => {
-      const requestWords = request.toLowerCase().split(/\s+/);
-      let bestMatch = null;
-      let maxScore = 0;
+      const requestWords = request
+        .toLowerCase()
+        .replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, "")
+        .split(/\s+/)
+        .filter(w => w.length > 2);
+
+      let bestMatch: { agent: Agent; score: number } | null = null;
 
       agents.forEach(agent => {
         let score = 0;
-        agent.skills.forEach(skill => {
-          if (requestWords.some(word => skill.toLowerCase().includes(word))) {
-            score++;
+        const lowerCaseSkills = agent.skills.join(' ').toLowerCase();
+        const lowerCaseName = agent.name.toLowerCase();
+        const lowerCaseDescription = agent.description.toLowerCase();
+
+        requestWords.forEach(word => {
+          if (lowerCaseSkills.includes(word)) {
+            score += 5; // Highest weight for skills
+          }
+          if (lowerCaseName.includes(word)) {
+            score += 3; // Medium weight for name
+          }
+          if (lowerCaseDescription.includes(word)) {
+            score += 1; // Low weight for description
           }
         });
-        if (score > maxScore) {
-          maxScore = score;
-          bestMatch = agent;
+
+        if (!bestMatch || score > bestMatch.score) {
+          bestMatch = { agent, score };
         }
       });
 
-      if (bestMatch) {
-        setMatchedAgents([bestMatch]);
+      if (bestMatch && bestMatch.score > 5) { // Require a minimum score to avoid bad matches
+        setMatchedAgents([bestMatch.agent]);
       } else {
         showError("No suitable agent found. Try rephrasing your request.");
       }
