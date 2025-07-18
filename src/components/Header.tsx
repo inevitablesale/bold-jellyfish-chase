@@ -18,7 +18,7 @@ export const Header = () => {
         </NavLink>
         <nav className="flex flex-1 items-center space-x-4 lg:space-x-6">
           <NavLink to="/" className={navLinkClasses}>
-            Dashboard
+            Home
           </NavLink>
           <NavLink to="/marketplace" className={navLinkClasses}>
             Marketplace

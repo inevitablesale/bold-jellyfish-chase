@@ -16,7 +16,7 @@ const QUICK_START_SUGGESTIONS = [
   "Create a Twitter thread from a blog post",
 ];
 
-const Dashboard = () => {
+const IndexPage = () => {
   const [request, setRequest] = useState("");
   const [agentsList, setAgentsList] = useState<Agent[]>(initialAgents);
   const [matchedAgents, setMatchedAgents] = useState<Agent[]>([]);
@@ -174,4 +174,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default IndexPage;
