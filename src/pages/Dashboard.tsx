@@ -68,6 +68,15 @@ const Dashboard = () => {
               <AgentCard key={agent.id} agent={agent} />
             ))}
           </div>
+          <div className="mt-12 text-center p-8 border-2 border-dashed rounded-lg max-w-2xl mx-auto">
+            <h3 className="text-xl font-semibold tracking-tight">Not what you were looking for?</h3>
+            <p className="text-muted-foreground mt-2 mb-4 max-w-xl mx-auto">
+              Build a custom agent for your specific need. Your creations help our developer community build better, more capable agents for everyone.
+            </p>
+            <Button onClick={() => setIsBuilderOpen(true)}>
+              Build a Custom Agent
+            </Button>
+          </div>
         </div>
       );
     }
