@@ -7,7 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Download, Terminal, CheckCircle, Clock, ShoppingCart, Cpu } from "lucide-react";
+import { Download, Terminal, CheckCircle, Clock, ShoppingCart, Cpu, Sparkles } from "lucide-react";
 import { showSuccess } from "@/utils/toast";
 
 const AgentExecution = () => {
@@ -129,12 +129,20 @@ const AgentExecution = () => {
 
           <div className="border-t pt-6">
             <h3 className="text-lg font-semibold">Execute Agent</h3>
-            <div className="mt-4 flex items-center gap-4">
+            <div className="mt-4 flex flex-wrap items-center gap-4">
               <Button onClick={handleRunAgent} disabled={isRunning}>
                 {!isPurchased && <ShoppingCart className="mr-2 h-4 w-4" />}
                 {buttonText}
               </Button>
-              {isRunning && <Progress value={progress} className="w-[60%]" />}
+              {isPurchased && !isRunning && (
+                <Button variant="outline" asChild>
+                  <Link to={`/workflows/new?agentId=${agent.id}`}>
+                    <Sparkles className="mr-2 h-4 w-4" />
+                    Create Workflow
+                  </Link>
+                </Button>
+              )}
+              {isRunning && <Progress value={progress} className="w-full sm:w-[60%]" />}
             </div>
           </div>
 
