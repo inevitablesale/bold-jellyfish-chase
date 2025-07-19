@@ -15,7 +15,8 @@ import {
   Scaling,
   Cloud,
   CreditCard,
-  Webhook
+  Webhook,
+  Music
 } from "lucide-react";
 
 const TechBadge = ({ children }: { children: React.ReactNode }) => (
@@ -61,7 +62,7 @@ const ArchitecturePage = () => {
           <ComponentCard 
             title="User Interface"
             icon={<User className="h-6 w-6" />}
-            description="Users interact with the platform to submit requests and view results."
+            description="Users interact with the platform to find instruments and compose symphonies."
             techs={["React", "TypeScript", "Tailwind CSS", "Vite"]}
           />
           <ArrowRight className="hidden md:block h-8 w-8 shrink-0" />
@@ -81,26 +82,26 @@ const ArchitecturePage = () => {
         {/* Row 2: Orchestration Engine */}
         <Card className="bg-muted/40">
           <CardHeader>
-            <CardTitle className="text-center flex items-center justify-center gap-2"><Layers className="h-5 w-5" /> Orchestration Engine</CardTitle>
-            <CardDescription className="text-center">The brain of the platform, composed of decoupled microservices.</CardDescription>
+            <CardTitle className="text-center flex items-center justify-center gap-2"><Music className="h-5 w-5" /> Orchestration Engine</CardTitle>
+            <CardDescription className="text-center">The brain of the platform, orchestrating single instruments and multi-step Symphonies.</CardDescription>
           </CardHeader>
           <CardContent className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <ComponentCard 
               title="Request Service"
               icon={<Server className="h-6 w-6" />}
-              description="Validates and processes incoming user requests."
+              description="Handles various triggers (manual, scheduled, webhook) and initiates agent jobs or symphonies."
               techs={["Node.js", "NestJS"]}
             />
             <ComponentCard 
               title="Matching Service"
               icon={<BrainCircuit className="h-6 w-6" />}
-              description="Uses vector search to match requests with the best agent."
+              description="Uses vector search to match natural language requests with the best instrument."
               techs={["Python", "Pinecone"]}
             />
             <ComponentCard 
               title="Execution Service"
               icon={<Container className="h-6 w-6" />}
-              description="Manages the lifecycle of agent jobs on the execution layer."
+              description="Manages the execution of individual instruments and orchestrates the flow of data in multi-step symphonies."
               techs={["Go", "Kubernetes API"]}
             />
             <ComponentCard 
@@ -124,8 +125,8 @@ const ArchitecturePage = () => {
               <CardTitle className="text-lg">Data & Storage</CardTitle>
             </CardHeader>
             <CardContent className="space-y-2 text-sm">
-              <p><TechBadge>PostgreSQL:</TechBadge> Stores user data, agent metadata, and job history.</p>
-              <p><TechBadge>Pinecone:</TechBadge> Vector database for semantic agent matching.</p>
+              <p><TechBadge>PostgreSQL:</TechBadge> Stores user data, instrument metadata, and job history.</p>
+              <p><TechBadge>Pinecone:</TechBadge> Vector database for semantic instrument matching.</p>
               <p><TechBadge>AWS S3:</TechBadge> Stores agent execution results and artifacts.</p>
               <p><TechBadge>Redis:</TechBadge> Caching layer for performance.</p>
             </CardContent>
@@ -152,7 +153,7 @@ const ArchitecturePage = () => {
             <CardContent className="space-y-2 text-sm">
               <p><TechBadge>Stripe:</TechBadge> Secure payment processing.</p>
               <p><TechBadge>Datadog:</TechBadge> Centralized logging, monitoring, and application performance.</p>
-              <p><TechBadge>GitHub:</TechBadge> Source control and CI/CD for agent onboarding.</p>
+              <p><TechBadge>GitHub:</TechBadge> Source control and CI/CD for instrument onboarding.</p>
             </CardContent>
           </Card>
         </div>
@@ -194,7 +195,7 @@ const ArchitecturePage = () => {
         </div>
 
         <div>
-          <SectionTitle>Agent Onboarding Flow</SectionTitle>
+          <SectionTitle>Instrument Onboarding Flow</SectionTitle>
           <div className="relative flex flex-col md:flex-row items-stretch justify-center gap-4 text-center">
             <div className="absolute top-1/2 left-0 w-full h-0.5 bg-border -translate-y-1/2 z-0"></div>
             <div className="absolute left-0 w-full flex justify-around z-0">
@@ -225,7 +226,7 @@ const ArchitecturePage = () => {
                 <CardTitle className="text-lg">3. Publish to Registry</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-muted-foreground">On success, the agent is published to our internal registry and becomes available in the marketplace.</p>
+                <p className="text-sm text-muted-foreground">On success, the agent is published to our internal registry and becomes available in the Instrument Library.</p>
               </CardContent>
             </Card>
           </div>
