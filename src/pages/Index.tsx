@@ -138,7 +138,7 @@ const IndexPage = () => {
                 </div>
                 <div className="text-center mt-12">
                   <Button asChild size="lg">
-                    <Link to="/marketplace">Explore All Agents</Link>
+                    <Link to="/instruments">Explore All Instruments</Link>
                   </Button>
                 </div>
               </div>

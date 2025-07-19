@@ -6,12 +6,12 @@ import { AgentCard } from "@/components/AgentCard";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { MarketplaceSidebar } from "@/components/MarketplaceSidebar";
+import { InstrumentsSidebar } from "@/components/InstrumentsSidebar";
 import { Sparkles, Search } from "lucide-react";
 
 const ALL_SOURCES = [...new Set(agents.map(a => a.source))];
 
-const AgentMarketplace = () => {
+const InstrumentsPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedSources, setSelectedSources] = useState<string[]>([]);
@@ -69,15 +69,15 @@ const AgentMarketplace = () => {
         <Sparkles className="mx-auto h-8 w-8 text-primary mb-2" />
         <h2 className="text-2xl font-bold tracking-tight">Become a Creator</h2>
         <p className="mt-2 text-muted-foreground max-w-xl mx-auto">
-          Have a powerful workflow or a custom automation? Publish it on our marketplace and share it with the world.
+          Have a powerful workflow or a custom automation? Publish it in our instrument library and share it with the world.
         </p>
         <Button asChild className="mt-4">
-          <Link to="/register-agent">Publish Your Agent</Link>
+          <Link to="/register-agent">Publish Your Instrument</Link>
         </Button>
       </div>
 
       <div className="flex flex-col lg:flex-row gap-8">
-        <MarketplaceSidebar
+        <InstrumentsSidebar
           sources={ALL_SOURCES as AgentSource[]}
           selectedCategories={selectedCategories}
           onCategoryChange={handleCategoryChange}
@@ -89,7 +89,7 @@ const AgentMarketplace = () => {
             <div className="relative w-full sm:max-w-xs">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input 
-                placeholder="Search agents..." 
+                placeholder="Search instruments..." 
                 className="pl-10"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -117,7 +117,7 @@ const AgentMarketplace = () => {
           </div>
           {filteredAgents.length === 0 && (
             <div className="text-center py-16">
-              <h3 className="text-xl font-semibold">No Agents Found</h3>
+              <h3 className="text-xl font-semibold">No Instruments Found</h3>
               <p className="text-muted-foreground mt-2">Try adjusting your search or filters.</p>
             </div>
           )}
@@ -127,4 +127,4 @@ const AgentMarketplace = () => {
   );
 };
 
-export default AgentMarketplace;
+export default InstrumentsPage;

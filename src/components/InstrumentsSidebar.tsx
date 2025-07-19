@@ -2,7 +2,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { AGENT_CATEGORIES, type AgentSource } from "@/data/agents";
 
-interface MarketplaceSidebarProps {
+interface InstrumentsSidebarProps {
   sources: AgentSource[];
   selectedCategories: string[];
   onCategoryChange: (categoryId: string, checked: boolean) => void;
@@ -10,13 +10,13 @@ interface MarketplaceSidebarProps {
   onSourceChange: (source: string, checked: boolean) => void;
 }
 
-export const MarketplaceSidebar = ({
+export const InstrumentsSidebar = ({
   sources,
   selectedCategories,
   onCategoryChange,
   selectedSources,
   onSourceChange,
-}: MarketplaceSidebarProps) => {
+}: InstrumentsSidebarProps) => {
   return (
     <aside className="w-full lg:w-64 lg:shrink-0">
       <div className="sticky top-20 space-y-6">

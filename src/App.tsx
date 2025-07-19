@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import IndexPage from "./pages/Index";
 import NotFound from "./pages/NotFound";
-import AgentMarketplace from "./pages/AgentMarketplace";
+import InstrumentsPage from "./pages/Instruments";
 import AgentExecution from "./pages/AgentExecution";
 import RegisterAgent from "./pages/RegisterAgent";
 import ArchitecturePage from "./pages/Architecture";
@@ -22,7 +22,7 @@ const App = () => (
         <Layout>
           <Routes>
             <Route path="/" element={<IndexPage />} />
-            <Route path="/marketplace" element={<AgentMarketplace />} />
+            <Route path="/instruments" element={<InstrumentsPage />} />
             <Route path="/agent/:id" element={<AgentExecution />} />
             <Route path="/register-agent" element={<RegisterAgent />} />
             <Route path="/architecture" element={<ArchitecturePage />} />

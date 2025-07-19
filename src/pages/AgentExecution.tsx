@@ -79,7 +79,7 @@ const AgentExecution = () => {
       <div className="container mx-auto p-8 text-center">
         <h2 className="text-2xl font-bold">Agent not found</h2>
         <Button asChild className="mt-4">
-          <Link to="/marketplace">Back to Marketplace</Link>
+          <Link to="/instruments">Back to Instruments</Link>
         </Button>
       </div>
     );

@@ -67,7 +67,7 @@ const Symphonies = () => {
           <SymphonyStep 
             icon={<DatabaseZap className="h-6 w-6 text-primary" />}
             title="Run Agent"
-            description="Execute an agent from the marketplace."
+            description="Select an instrument to perform."
             agentName="Lead Generation Bot"
           />
           <ArrowRight className="hidden md:block h-8 w-8 shrink-0 text-muted-foreground" />
@@ -75,7 +75,7 @@ const Symphonies = () => {
           <SymphonyStep 
             icon={<FileText className="h-6 w-6 text-primary" />}
             title="Run Agent"
-            description="Pass the output to another agent."
+            description="Pass the output to another instrument."
             agentName="Market Research Analyst"
           />
           <ArrowRight className="hidden md:block h-8 w-8 shrink-0 text-muted-foreground" />
