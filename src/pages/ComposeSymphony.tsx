@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { showSuccess, showError } from "@/utils/toast";
 import { agents as allAgents, Agent } from "@/data/agents";
 import { TriggerConfigurationDialog } from "@/components/TriggerConfigurationDialog";
+import { AddInstrumentDialog } from "@/components/AddInstrumentDialog";
 
 type TriggerType = 'manual' | 'scheduled' | 'webhook';
 
@@ -38,6 +39,7 @@ const ComposeSymphony = () => {
   const [symphonyName, setSymphonyName] = useState('');
   const [steps, setSteps] = useState<SymphonyStep[]>([]);
   const [isTriggerDialogOpen, setIsTriggerDialogOpen] = useState(false);
+  const [isAddInstrumentDialogOpen, setIsAddInstrumentDialogOpen] = useState(false);
 
   useEffect(() => {
     const initialSteps: SymphonyStep[] = [
@@ -71,9 +73,12 @@ const ComposeSymphony = () => {
   }, [searchParams]);
 
   const handleAddStep = () => {
-    const agentToAdd = allAgents.find(a => a.id === 'seo-optimizer-1');
+    setIsAddInstrumentDialogOpen(true);
+  };
+
+  const handleSelectInstrument = (agentToAdd: Agent) => {
     if (!agentToAdd) {
-      showError("Could not find a sample agent to add.");
+      showError("Could not add the selected agent.");
       return;
     }
     const newStep: SymphonyStep = {
@@ -206,6 +211,11 @@ const ComposeSymphony = () => {
         setIsOpen={setIsTriggerDialogOpen}
         currentDescription={triggerStep?.content.description || 'Manual Run'}
         onSave={handleSaveTrigger}
+      />
+      <AddInstrumentDialog
+        isOpen={isAddInstrumentDialogOpen}
+        setIsOpen={setIsAddInstrumentDialogOpen}
+        onAgentSelect={handleSelectInstrument}
       />
     </div>
   );
